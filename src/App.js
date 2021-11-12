@@ -1,14 +1,21 @@
-import React from "react";
+import React, { Suspense } from "react";
+import { HashRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import routers from "./routes/index";
 import { GlobalStyle } from './style';
 import { IconStyle } from './assets/iconfont/iconfont'
 
 function App() {
   return (
-    <div className="App">
-      <GlobalStyle></GlobalStyle>
-      <IconStyle></IconStyle>
-      <i className="iconfont">&#xe62b;</i>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <HashRouter>
+        <GlobalStyle />
+        <IconStyle />
+        {
+          renderRoutes(routers)
+        }
+      </HashRouter>
+    </Suspense>
   );
 }
 
