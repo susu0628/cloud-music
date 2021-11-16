@@ -7,7 +7,11 @@ export const SliderContainer = styled.div`
   margin: auto;
   .swiper {
     position: relative;
+    width: 98%;
+    margin: auto;
+    border-radius: 6px;
     .swiper-wrapper {
+      z-index: 10;
       .swiper-slide {
         img {
           width: 100%;
@@ -17,5 +21,12 @@ export const SliderContainer = styled.div`
     .swiper-pagination-bullet-active {
       background: ${style ["theme-color"]};
     }
+  }
+  .before {
+    position: absolute;
+    top: 80px;
+    height: 100px;
+    width: 100%;
+    background: ${style ["theme-color"]};
   }
 `

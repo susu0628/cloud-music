@@ -1,16 +1,19 @@
 import React, { useEffect, useState, memo } from 'react';
-import Swiper from "swiper";
+import Swiper, { Autoplay, Pagination } from "swiper";
 import { SliderContainer } from './style';
-import 'swiper/dist/css/swiper.css';
+import "swiper/swiper.min.css";
+Swiper.use([Autoplay, Pagination]);
 
 const Slider = ({ list = [] }) => {
   const [sliderSwiper, setSliderSwiper] = useState (null);
   useEffect(() => {
     if (list.length > 0 && !sliderSwiper) {
       let newSliderSwiper = new Swiper('.swiper', {
+        loop: true,
         pagination: {
           el: ".swiper-pagination",
         },
+        autoplay: true
       })
       setSliderSwiper(newSliderSwiper)
     }
@@ -31,6 +34,7 @@ const Slider = ({ list = [] }) => {
         </div>
         <div className="swiper-pagination"></div>
       </div>
+      <div className="before"></div>
     </SliderContainer>
     
   )
