@@ -5,6 +5,7 @@ export const SliderContainer = styled.div`
   width: 100%;
   background: #fff;
   margin: auto;
+  position: relative;
   .swiper {
     position: relative;
     width: 98%;
@@ -24,8 +25,8 @@ export const SliderContainer = styled.div`
   }
   .before {
     position: absolute;
-    top: 80px;
-    height: 100px;
+    top: -300px;
+    height: 400px;
     width: 100%;
     background: ${style ["theme-color"]};
   }

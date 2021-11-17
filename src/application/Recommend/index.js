@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 import Slider from '../../components/slider';
 import RecommendList from '../../components/list';
+import { Content } from './style'
+import Scroll from '../../baseUI/scroll';
 
 const Recommend = () => {
   const bannerList = [1, 2, 3, 4].map (item => {
@@ -16,10 +18,15 @@ const Recommend = () => {
     }
   });
   return (
-    <div>
-      <Slider list={bannerList} />
-      <RecommendList recommendList={recommendList} />
-    </div>
+    <Content>
+      <Scroll>
+        <div>
+          <Slider list={bannerList} />
+          <RecommendList recommendList={recommendList} />
+        </div>
+      </Scroll>
+    </Content>
+    
   )
 }
 export default memo(Recommend)
