@@ -17,7 +17,6 @@ const Scroll = ({
 }) => {
   const scrollContainerRef = useRef();
   const [bScroll, setBScroll] = useState();
-
   useEffect(() => {
     const scroll = new BScroll(scrollContainerRef.current, {
       scrollX: direction === 'horizental',
@@ -78,7 +77,7 @@ const Scroll = ({
     if (refresh && bScroll) {
       bScroll.refresh();
     }
-  }, [refresh, bScroll])
+  })
 
 
   return (
