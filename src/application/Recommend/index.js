@@ -1,5 +1,13 @@
+/*
+ * @Author: jiangsusu
+ * @Date: 2021-11-17 14:59:11
+ * @LastEditTime: 2021-11-22 11:08:39
+ * @LastEditors: jiangsusu
+ * @Description: 
+ */
 import React, { memo, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { forceCheck } from 'react-lazyload';
 import Slider from '../../components/slider';
 import RecommendList from '../../components/list';
 import { Content } from './style'
@@ -16,7 +24,7 @@ const Recommend = ({ bannerList, recommendList, getBannerDataDispatch, getRecomm
   const recommendListJS = recommendList ? recommendList.toJS() : [];
   return (
     <Content>
-      <Scroll className="list">
+      <Scroll className="list" onScroll={forceCheck}>
         <div>
           <Slider list={bannerListJS} />
           <RecommendList recommendList={recommendListJS} />

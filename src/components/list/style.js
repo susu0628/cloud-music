@@ -1,3 +1,10 @@
+/*
+ * @Author: jiangsusu
+ * @Date: 2021-11-16 18:07:31
+ * @LastEditTime: 2021-11-22 10:56:58
+ * @LastEditors: jiangsusu
+ * @Description: 
+ */
 import styled from "styled-components";
 import style from '../../assets/global-style'
 
@@ -21,6 +28,8 @@ export const ListItem = styled.div`
   width: 32%;
   .img_wrapper {
     position: relative;
+    padding-bottom: 100%;
+    height: 0;
     // 给图片上的图标和文字提供一个遮罩阴影来衬托文字，防止由于背景是白色的时候，文字会看不清或者看不到
     .decorate {
       position: absolute;
@@ -43,6 +52,9 @@ export const ListItem = styled.div`
     }
     img {
       border-radius: 3px;
+      position: absolute;
+      width: 100%;
+      height: 100%;
     }
   }
   .desc {
