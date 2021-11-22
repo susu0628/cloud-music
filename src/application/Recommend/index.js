@@ -1,7 +1,7 @@
 /*
  * @Author: jiangsusu
  * @Date: 2021-11-17 14:59:11
- * @LastEditTime: 2021-11-22 11:08:39
+ * @LastEditTime: 2021-11-22 16:14:18
  * @LastEditors: jiangsusu
  * @Description: 
  */
@@ -11,13 +11,21 @@ import { forceCheck } from 'react-lazyload';
 import Slider from '../../components/slider';
 import RecommendList from '../../components/list';
 import { Content } from './style'
-import Scroll from '../../baseUI/scroll';
+import { Scroll, Loading } from '../../baseUI';
 import * as actionTypes from './store/actionCreators';
 
-const Recommend = ({ bannerList, recommendList, getBannerDataDispatch, getRecommendListDataDispatch }) => {
+const Recommend = ({ bannerList, recommendList, enterLoading, getBannerDataDispatch, getRecommendListDataDispatch }) => {
   useEffect(() => {
-    getBannerDataDispatch();
-    getRecommendListDataDispatch();
+    /**
+     * 切换到另一个tab页之后，再回到推荐页，会再次发起请求
+     * 优化：如果页面有数据，则不发起请求
+     */
+    if (!bannerList.size) {
+      getBannerDataDispatch();
+    }
+    if (!recommendList.size) {
+      getRecommendListDataDispatch();
+    }
   }, [])
 
   const bannerListJS = bannerList ? bannerList.toJS() : [];
@@ -30,6 +38,9 @@ const Recommend = ({ bannerList, recommendList, getBannerDataDispatch, getRecomm
           <RecommendList recommendList={recommendListJS} />
         </div>
       </Scroll>
+      {
+        enterLoading && <Loading />
+      }
     </Content>
     
   )
@@ -37,7 +48,8 @@ const Recommend = ({ bannerList, recommendList, getBannerDataDispatch, getRecomm
 const mapStateToProps = (state) => {
   return {
     bannerList: state.getIn(['recommend', 'bannerList']),
-    recommendList: state.getIn(['recommend', 'recommendList'])
+    recommendList: state.getIn(['recommend', 'recommendList']),
+    enterLoading: state.getIn(['recommend', 'enterLoading'])
   }
 }
 const mapDispatchToProps = (dispatch) => {

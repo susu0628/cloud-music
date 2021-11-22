@@ -1,3 +1,10 @@
+/*
+ * @Author: jiangsusu
+ * @Date: 2021-11-12 17:09:43
+ * @LastEditTime: 2021-11-22 15:59:03
+ * @LastEditors: jiangsusu
+ * @Description: 
+ */
 import React, { useEffect, useState, memo } from 'react';
 import Swiper, { Autoplay, Pagination } from "swiper";
 import { SliderContainer } from './style';
@@ -26,7 +33,7 @@ const Slider = ({ list = [] }) => {
             list.map((item, index) => {
               return (
                 <div className="swiper-slide" key={index}>
-                  <img src={item.imageUrl} />
+                  <img src={item.imageUrl} alt="" />
                 </div>
               )
             })

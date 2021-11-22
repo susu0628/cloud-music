@@ -1,3 +1,10 @@
+/*
+ * @Author: jiangsusu
+ * @Date: 2021-11-12 17:35:21
+ * @LastEditTime: 2021-11-22 15:58:38
+ * @LastEditors: jiangsusu
+ * @Description: 
+ */
 import styled from "styled-components";
 import style from '../../assets/global-style'
 
@@ -20,7 +27,7 @@ export const SliderContainer = styled.div`
       }
     }
     .swiper-pagination-bullet-active {
-      background: ${style ["theme-color"]};
+      background: ${style["theme-color"]};
     }
   }
   .before {
@@ -28,6 +35,6 @@ export const SliderContainer = styled.div`
     top: -300px;
     height: 400px;
     width: 100%;
-    background: ${style ["theme-color"]};
+    background: ${style["theme-color"]};
   }
 `
