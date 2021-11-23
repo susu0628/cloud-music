@@ -5,13 +5,29 @@
  * @LastEditors: jiangsusu
  * @Description: 歌手分类
  */
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { HorizenItem } from '../../baseUI'
-import { categoryTypes } from '../../api/config';
+import { categoryTypes, alphaTypes } from '../../api/config';
+import { NavContainer } from './style';
 
 const Singers = () => {
+  const [currentVal, setCurrentVal] = useState({
+    category: '',
+    alpha: ''
+  })
+
+  const handleClick = (type, value) => {
+    console.log('type', type, value)
+    setCurrentVal({
+      ...currentVal,
+      [type]: value
+    })
+  }
   return (
-    <HorizenItem list={categoryTypes} title="分类（默认热门）：" />
+    <NavContainer>
+      <HorizenItem currentVal={currentVal.category} list={categoryTypes} title="分类（默认热门）：" handleClick={(value) => { handleClick('category', value) }} />
+      <HorizenItem currentVal={currentVal.alpha} list={alphaTypes} title={"首字母:"} handleClick={(value) => { handleClick('alpha', value) }}></HorizenItem>
+    </NavContainer>
   )
 }
 export default memo(Singers)
