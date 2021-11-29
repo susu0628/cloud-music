@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import BScroll from 'better-scroll';
+import Loading from '../loading';
+import Loading2 from '../loading2';
 import { ScrollContainer } from './style';
 
 const Scroll = ({
@@ -83,6 +85,9 @@ const Scroll = ({
   return (
     <ScrollContainer ref={scrollContainerRef}>
       {children}
+      {/* 下拉加载动画 */}
+      {pullUploading && <Loading />}
+      {pullDownLoading && <Loading2 />}
     </ScrollContainer>
   )
 }

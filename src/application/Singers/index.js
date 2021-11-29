@@ -11,17 +11,18 @@ import { toJS } from 'immutable';
 import { HorizenItem, Scroll } from '../../baseUI'
 import { categoryTypes, alphaTypes } from '../../api/config';
 import { NavContainer, ListContainer, List, ListItem } from './style';
-import { 
+import {
   getHotSingerList,
   getSingerList,
-  changeEnterLoading, 
-  changePageCount, 
-  changePullUpLoading, 
-  changePullDownLoading, 
-  refreshMoreHotSingerList 
+  changeEnterLoading,
+  changePageCount,
+  changePullUpLoading,
+  changePullDownLoading,
+  refreshMoreHotSingerList,
+  refreshMoreSingerList
 } from './store/actionCreators';
 
-const Singers = ({ singerList, getHotSingerDispatch, updateDispatch }) => {
+const Singers = ({ pullUpLoading, pullDownLoading, pageCount, singerList, getHotSingerDispatch, updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch }) => {
   const [currentVal, setCurrentVal] = useState({
     category: '',
     alpha: ''
@@ -44,6 +45,16 @@ const Singers = ({ singerList, getHotSingerDispatch, updateDispatch }) => {
     getHotSingerDispatch()
   }, [])
 
+  const handlePullUp = () => {
+    const { category, alpha } = currentVal;
+    pullUpRefreshDispatch(category, alpha, category === '', pageCount);
+  }
+
+  const handlePullDown = () => {
+    const { category, alpha } = currentVal;
+    pullDownRefreshDispatch(category, alpha);
+  }
+
   return (
     <div>
       <NavContainer>
@@ -51,11 +62,15 @@ const Singers = ({ singerList, getHotSingerDispatch, updateDispatch }) => {
         <HorizenItem currentVal={currentVal.alpha} list={alphaTypes} title={"首字母:"} handleClick={(value) => { handleClick('alpha', value) }}></HorizenItem>
       </NavContainer>
       <ListContainer>
-        <Scroll>
+        <Scroll 
+          pullUp={handlePullUp} 
+          pullDown={handlePullDown} 
+          pullUpLoading={pullUpLoading} 
+          pullDownLoading={pullDownLoading}
+        >
           <List>
             {
               singerListJS.map((item, index) => {
-                console.log(`item${index+1}`, item)
                 const { accountId, picUrl, name } = item;
                 return (
                   <ListItem key={`${accountId}${index}`}>
@@ -71,7 +86,7 @@ const Singers = ({ singerList, getHotSingerDispatch, updateDispatch }) => {
         </Scroll>
       </ListContainer>
     </div>
-    
+
   )
 }
 
@@ -90,7 +105,27 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateDispatch(category, alpha) {
       dispatch(changePageCount(0));
-      dispatch(getSingerList(category, alpha, 0));
+      dispatch(getSingerList(category, alpha));
+    },
+    // 上拉加载
+    pullUpRefreshDispatch(category, alpha, hot, count) {
+      dispatch(changePullUpLoading(true))
+      dispatch(changePageCount(count + 1))
+      if (hot) {
+        dispatch(refreshMoreHotSingerList())
+      } else {
+        dispatch(refreshMoreSingerList(category, alpha))
+      }
+    },
+    // 下拉刷新
+    pullDownRefreshDispatch(category, alpha) {
+      dispatch(changePullDownLoading(true));
+      dispatch(changePageCount(0));
+      if (category === '' && alpha === '') {
+        dispatch(getHotSingerList())
+      } else {
+        dispatch(getSingerList(category, alpha))
+      }
     }
   }
 }
